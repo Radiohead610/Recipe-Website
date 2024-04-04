@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {motion} from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';     //params pulls out the key word in the url
 
-
 function Cuisine() {
     const [cuisine, setCuisine] = useState([]);
     let params = useParams();
@@ -20,12 +19,19 @@ function Cuisine() {
     }, [params.type]);
 
   return (
-    <Grid>
+    <Grid
+        animate={{opacity:1}}
+        initial={{opacity:0}}
+        exit={{opacity:1}}
+        transition={{duration:0.5}}
+    >
       {cuisine.map((item) => {
         return (
             <Card key={item.id}>
+                <Link to={'/recipe/' + item.id}>
                 <img src={item.image} alt="" />
                 <h4>{item.title}</h4>
+                </Link>
             </Card>
         );
       })}
@@ -33,7 +39,7 @@ function Cuisine() {
   ) 
 }
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     grid-gap: 3rem;
